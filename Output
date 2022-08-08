@@ -4,7 +4,7 @@ frame1 = [sequence[start:start+3] for start in range(0,len(sequence), 3)]
 stopIndex = len(frame1)
 #start codon recognition
 if 'ATG' in frame1:
-    #defining varaible to represent codon positions and indices
+    #defining varaibles to represent codon positions and indices
     startIndex = frame1.index('ATG')
     startPos = 3 * startIndex + 1
     #earliest stop codon recognition
@@ -14,7 +14,7 @@ if 'ATG' in frame1:
         stopIndex = frame1.index('TAG')
     if 'TGA' in frame1 and frame1.index('TGA') < stopIndex:
         stopIndex = frame1.index('TGA')
-    #calculation of orf length
+    #calculation of ORF length
     orfLen = (stopIndex - startIndex + 1) * 3
     #formatted output header
     print(">" + sequenceID + " | FRAME = 1 POS = " + str(startPos) + " LEN = " + str(orfLen))
