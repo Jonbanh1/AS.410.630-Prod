@@ -14,11 +14,11 @@ def frame123(sequenceID, sequence, orfval):
             startIndex = frame.index('ATG')
             startPos = 3 * startIndex + frameNum
             #stop codon recognition updates the previous stopIndex
-            if 'TAA' in frame:
+            if 'TAA' in frame and frame.index('TAA') > startIndex:
                 stopIndex = frame.index('TAA')
-            if 'TAG' in frame and frame.index('TAG') < stopIndex:
-                stopIndex = frame1.index('TAG')
-            if 'TGA' in frame and frame.index('TGA') < stopIndex:
+            if 'TAG' in frame and frame.index('TAG') < stopIndex and frame.index('TAG') > startIndex:
+                stopIndex = frame.index('TAG')
+            if 'TGA' in frame and frame.index('TGA') < stopIndex and frame.index('TGA') > startIndex:
                 stopIndex = frame.index('TGA')
             #Calculating length of ORF and verifying if meets user defined minimum ORF length
             orfLen = (stopIndex - startIndex + 1) * 3
