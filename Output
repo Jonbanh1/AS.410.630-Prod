@@ -1,60 +1,19 @@
-#This program splits the sequence into 3-base codons and stores them in frame dictionaries, in which each frame is offset from the previous by 1 base
-#Frame 1 splits the sequence from the first base
-frame1 = [sequence[start:start+3] for start in range(0,len(sequence), 3)]
-stopIndex = len(frame1)
-#start codon recognition
-if 'ATG' in frame1:
-    #defining varaibles to represent codon positions and indices
-    startIndex = frame1.index('ATG')
-    startPos = 3 * startIndex + 1
-    #earliest stop codon recognition
-    if 'TAA' in frame1:
-        stopIndex = frame1.index('TAA')
-    if 'TAG' in frame1 and frame1.index('TAG') < stopIndex:
-        stopIndex = frame1.index('TAG')
-    if 'TGA' in frame1 and frame1.index('TGA') < stopIndex:
-        stopIndex = frame1.index('TGA')
-    #calculation of ORF length
-    orfLen = (stopIndex - startIndex + 1) * 3
-    #formatted output header
-    print(">" + sequenceID + " | FRAME = 1 POS = " + str(startPos) + " LEN = " + str(orfLen))
-    #output of codons within orf of Frame 1
-    for index in range(startIndex, stopIndex + 1):
-        print(frame1[index], ' ', end = '',)
-    print("\n")
-#Frame 2 splits the sequence from the second base
-#repeated method as Frame 1 with offset of 1
-frame2 = [sequence[start:start+3] for start in range(1,len(sequence), 3)]
-stopIndex = len(frame2)
-if 'ATG' in frame2:
-    startIndex = frame2.index('ATG')
-    startPos = 3 * startIndex + 2
-    if 'TAA' in frame2:
-        stopIndex = frame2.index('TAA')
-    if 'TAG' in frame2 and frame2.index('TAG') < stopIndex:
-        stopIndex = frame2.index('TAG')
-    if 'TGA' in frame2 and frame2.index('TGA') < stopIndex:
-        stopIndex = frame2.index('TGA')
-    orfLen = (stopIndex - startIndex + 1) * 3
-    print(">" + sequenceID + " | FRAME = 2 POS = " + str(startPos) + " LEN = " + str(orfLen))
-    for index in range(startIndex, stopIndex + 1):
-        print(frame2[index], ' ', end = '',)
-    print("\n")
-#Frame 3 splits the sequence from the third base
-#repeated method of Frame 1 with offset of 2
-frame3 = [sequence[start:start+3] for start in range(2,len(sequence), 3)]
-stopIndex = len(frame3)
-if 'ATG' in frame3:
-    startIndex = frame3.index('ATG')
-    startPos = 3 * startIndex + 3
-    if 'TAA' in frame3:
-        stopIndex = frame3.index('TAA')
-    if 'TAG' in frame3 and frame3.index('TAG') < stopIndex:
-        stopIndex = frame3.index('TAG')
-    if 'TGA' in frame3 and frame3.index('TGA') < stopIndex:
-        stopIndex = frame3.index('TGA')
-    orfLen = (stopIndex - startIndex + 1) * 3
-    print(">" + sequenceID + " | FRAME = 3 POS = " + str(startPos) + " LEN = " + str(orfLen))
-    for index in range(startIndex, stopIndex + 1):
-        print(frame3[index], ' ', end = '',)
-    print("\n")
+def frame123(sequenceID, sequence):
+    for i in range(3):
+        frameNum = i + 1
+        frame = [sequence[start:start+3] for start in range(i,len(sequence),3)]
+        stopIndex = len(frame)
+        if 'ATG' in frame:
+            startIndex = frame.index('ATG')
+            startPos = 3 * startIndex + frameNum
+            if 'TAA' in frame:
+                stopIndex = frame.index('TAA')
+            if 'TAG' in frame and frame.index('TAG') < stopIndex:
+                stopIndex = frame1.index('TAG')
+            if 'TGA' in frame and frame.index('TGA') < stopIndex:
+                stopIndex = frame.index('TGA')
+            orfLen = (stopIndex - startIndex + 1) * 3
+            print(">" + sequenceID + " | FRAME = " + str(frameNum) + " POS = " + str(startPos) + " LEN = " + str(orfLen))
+            for index in range(startIndex, stopIndex + 1):
+                print(frame[index], " ", end = '')
+            print("\n")
