@@ -1,1 +1,39 @@
-
+def frame123(sequenceID, sequence, orfval):
+    #creating arrays of start and stop codon indices
+    startCodon = []
+    stopCodon = []
+    for i in range(3):
+        #defining current frame
+        frameNum = i + 1
+        #storing codons split by the frame
+        frame = [sequence[start:start+3] for start in range(i,len(sequence),3)]
+        #clear start and stop arrays in every frame
+        startCodon.clear()
+        stopCodon.clear()
+        #searching frame array for start and stop codons and appending them into respective arrays
+        for int in range(len(frame)):
+            if(frame[int] == 'ATG'):
+                startCodon.append(int)
+            elif(frame[int] == 'TAA' or frame[int] == 'TAG' or frame[int] == 'TGA'):
+                stopCodon.append(int)
+        #Need to find a way to detect ORFs and ignore previous start codons that are before stop codons
+        for a in range(len(startCodon)):
+            #stopIndex = len(frame)
+            #startIndex = startCodon[a]
+            for b in range(len(stopCodon)):
+                if stopCodon[b] > startCodon[a]:
+                    startIndex = startCodon[a]
+                    stopIndex = stopCodon[b]
+                    break
+            startPos = 3 * startIndex + frameNum
+            orfLen = (stopIndex - startIndex + 1) * 3
+            if orfLen >= orfval:
+                print(">" + sequenceID + " | FRAME = " + str(frameNum) + " POS = " + str(startPos) + " LEN = " + str(orfLen))
+                codonCount = 0
+                for index in range(startIndex, stopIndex + 1):
+                    print(frame[index], " ", end = '')
+                    codonCount = codonCount + 1
+                    if codonCount == 15:
+                        print("\n")
+                        codonCount = 0
+                print("\n")
